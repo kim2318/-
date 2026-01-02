@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>茗韵 - 探索中国茶文化</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2D5D2A',     // 深绿色，代表茶叶
+            secondary: '#8B4513',   // 棕色，代表土地
+            accent: '#D4A574',     // 琥珀色，代表茶汤
+            light: '#F5F5DC',       // 米色，代表纸张
+            dark: '#2C3E50'         // 深蓝色，代表沉稳
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            serif: ['Georgia', 'Cambria', 'serif'] // 修正了拼写错误 'serif'
+          },
+        },
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.8s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    }
+  </style>
+</head>
+<body class="font-sans bg-light text-dark">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="container mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="#" class="text-2xl font-bold text-white flex items-center">
+        <i class="fa fa-leaf mr-2 text-accent"></i>
+        <span>茗韵</span>
+      </a>
+      
+      <!-- 桌面导航 -->
+      <nav class="hidden md:flex space-x-8">
+        <a href="#home" class="text-white hover:text-accent transition-colors">首页</a>
+        <a href="#categories" class="text-white hover:text-accent transition-colors">茶叶分类</a>
+        <a href="#black-tea" class="text-white hover:text-accent transition-colors">红茶</a>
+        <a href="#green-tea" class="text-white hover:text-accent transition-colors">绿茶</a>
+        <a href="#about" class="text-white hover:text-accent transition-colors">关于我们</a>
+      </nav>
+      
+      <!-- 移动端菜单按钮 -->
+      <button id="menu-toggle" class="md:hidden text-white text-xl">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-dark/95 absolute w-full">
+      <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+        <a href="#home" class="text-white hover:text-accent py-2 transition-colors">首页</a>
+        <a href="#categories" class="text-white hover:text-accent py-2 transition-colors">茶叶分类</a>
+        <a href="#black-tea" class="text-white hover:text-accent py-2 transition-colors">红茶</a>
+        <a href="#green-tea" class="text-white hover:text-accent py-2 transition-colors">绿茶</a>
+        <a href="#about" class="text-white hover:text-accent py-2 transition-colors">关于我们</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- 英雄区域 -->
+  <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <img src="https://picsum.photos/id/225/1920/1080" alt="茶叶背景" class="w-full h-full object-cover opacity-80">
+      <div class="absolute inset-0 bg-gradient-to-b from-dark/60 to-dark/40"></div>
+    </div>
+    <div class="container mx-auto px-4 z-10 text-center">
+      <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-white mb-6 leading-tight text-shadow animate-fade-in">
+        探索中国传统<span class="text-accent">茶文化</span>的精髓
+      </h1>
+      <p class="text-[clamp(1rem,2vw,1.25rem)] text-white/90 mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.2s">
+        从高山云雾到您的茶杯，每一片茶叶都承载着千年的历史与匠心
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fade-in" style="animation-delay: 0.4s">
+        <a href="#categories" class="px-8 py-3 bg-primary hover:bg-primary/90 text-white rounded-full transition-all transform hover:scale-105">
+          探索茶叶
+        </a>
+        <a href="#about" class="px-8 py-3 bg-transparent border-2 border-white text-white rounded-full hover:bg-white/10 transition-all">
+          了解更多
+        </a>
+      </div>
+    </div>
+    <div class="absolute bottom-10 left-0 right-0 flex justify-center animate-bounce">
+      <a href="#categories" class="text-white/80 hover:text-white">
+        <i class="fa fa-chevron-down text-2xl"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- 茶叶分类区域 -->
+  <section id="categories" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">茶叶分类</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">中国茶叶种类繁多，根据制作工艺和发酵程度的不同，主要分为六大类</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 红茶 -->
+        <div class="bg-light rounded-xl overflow-hidden shadow-lg card-hover group">
+          <div class="relative h-60 overflow-hidden">
+            <img src="https://picsum.photos/seed/black-tea/800/600" alt="红茶" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">红茶</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">全发酵茶，茶汤呈红色，香气浓郁，口感醇厚。</p>
+            <a href="#black-tea" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+              了解更多 <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 绿茶 -->
+        <div class="bg-light rounded-xl overflow-hidden shadow-lg card-hover group">
+          <div class="relative h-60 overflow-hidden">
+            <img src="https://picsum.photos/seed/green-tea-leaves/800/600" alt="绿茶" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">绿茶</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">不发酵茶，茶汤呈绿色，清香高雅，口感鲜爽。</p>
+            <a href="#green-tea" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+              了解更多 <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 乌龙茶 -->
+        <div class="bg-light rounded-xl overflow-hidden shadow-lg card-hover group">
+          <div class="relative h-60 overflow-hidden">
+            <img src="https://picsum.photos/seed/oolong-tea/800/600" alt="乌龙茶" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">乌龙茶</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">半发酵茶，介于红茶和绿茶之间，香气馥郁持久。</p>
+            <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+              了解更多 <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 白茶 -->
+        <div class="bg-light rounded-xl overflow-hidden shadow-lg card-hover group">
+          <div class="relative h-60 overflow-hidden">
+            <img src="https://picsum.photos/seed/white-tea/800/600" alt="白茶" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">白茶</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">轻微发酵茶，制作工艺简单，保留了茶叶的天然物质。</p>
+            <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+              了解更多 <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 黄茶 -->
+        <div class="bg-light rounded-xl overflow-hidden shadow-lg card-hover group">
+          <div class="relative h-60 overflow-hidden">
+            <img src="https://picsum.photos/seed/yellow-tea/800/600" alt="黄茶" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">黄茶</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">轻发酵茶，具有"黄叶黄汤"的特点，香气清悦。</p>
+            <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+              了解更多 <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- 黑茶 -->
+        <div class="bg-light rounded-xl overflow-hidden shadow-lg card-hover group">
+          <div class="relative h-60 overflow-hidden">
+            <img src="https://picsum.photos/seed/dark-tea/800/600" alt="黑茶" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
+            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold">黑茶</h3>
+          </div>
+          <div class="p-6">
+            <p class="text-gray-600 mb-4">后发酵茶，经过渥堆发酵，茶性温和，适合长期存放。</p>
+            <a href="#" class="inline-flex items-center text-primary hover:text-primary/80 font-medium">
+              了解更多 <i class="fa fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 红茶详细介绍 -->
+  <section id="black-tea" class="py-20 bg-gradient-to-b from-light to-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">红茶详解</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">红茶是全发酵茶，因其干茶色泽和冲泡的茶汤以红色为主调而得名。</p>
+      </div>
+      
+      <!-- 红茶概览 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 items-center">
+        <div>
+          <h3 class="text-2xl font-bold mb-6">红茶简介</h3>
+          <p class="text-gray-700 mb-4">红茶的制作过程包括萎凋、揉捻、发酵和干燥四个主要步骤。发酵是红茶制作的关键工艺，通过氧化作用使茶叶中的茶多酚转化为茶黄素、茶红素等物质，形成红茶特有的品质特征。</p>
+          <p class="text-gray-700 mb-4">红茶具有红汤红叶、香气甜醇的品质特征，性温，适合大多数人群饮用，尤其适合冬季饮用。</p>
+          <div class="flex flex-wrap gap-4 mt-8">
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">全发酵茶</span>
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">红汤红叶</span>
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">香气甜醇</span>
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">茶性温和</span>
+          </div>
+        </div>
+        <div class="relative h-96 overflow-hidden rounded-xl shadow-xl">
+          <img src="https://picsum.photos/seed/black-tea-ceremony/800/600" alt="红茶" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent flex items-end">
+            <div class="p-6 text-white">
+              <h4 class="text-xl font-bold">红茶制作工艺</h4>
+              <p>萎凋 → 揉捻 → 发酵 → 干燥</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 红茶种类 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 祁门红茶 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/keemun-black-tea/600/400" alt="祁门红茶" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">祁门红茶</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">安徽祁门</span>
+            </div>
+            <p class="text-gray-600 mb-4">祁门红茶简称祁红，是中国传统功夫红茶的珍品，为历史名茶，出产于19世纪后期，是世界三大高香茶之一，有"茶中英豪"、"群芳最"、"王子茶"等美誉。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：香气高长，滋味醇厚</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：红艳明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 正山小种 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/lapsang-souchong/600/400" alt="正山小种" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">正山小种</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">福建武夷山</span>
+            </div>
+            <p class="text-gray-600 mb-4">正山小种是世界上最早的红茶，亦称"红茶鼻祖"，至今已经有400多年的历史。由福建武夷山深处当地茶农于明朝中后期机缘之下创制而成。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：松烟香，桂圆汤味</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：红浓明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 金骏眉 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/jinjunmei-tea/600/400" alt="金骏眉" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">金骏眉</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">福建武夷山</span>
+            </div>
+            <p class="text-gray-600 mb-4">金骏眉是正山小种茶的顶级品种，首创于2005年。金骏眉的制作工艺基本沿袭了正山小种的传统，全部采用芽头制作，5万多个芽头才能制成1斤金骏眉。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：香气馥郁，滋味甘爽</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：金黄透亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 滇红 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/yunnan-black-tea/600/400" alt="滇红" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">滇红</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">云南凤庆</span>
+            </div>
+            <p class="text-gray-600 mb-4">滇红是云南红茶的统称，分为滇红功夫茶和滇红碎茶两种。滇红功夫茶于1939年在云南凤庆首先试制成功，其外形条索紧结，肥硕雄壮。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：香气鲜郁高长，滋味浓厚</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：红艳明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 宜红 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/yichang-black-tea/600/400" alt="宜红" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">宜红</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">湖北宜昌</span>
+            </div>
+            <p class="text-gray-600 mb-4">宜红功夫茶简称宜红，是我国历史悠久的工夫红茶之一。19世纪中叶生产于鄂西武陵山茶区，是中国传统出口红茶，远销欧美多个国家和地区。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：香气甜纯高长，滋味鲜醇</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：红亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 川红 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/sichuan-black-tea/600/400" alt="川红" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">川红</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">四川宜宾</span>
+            </div>
+            <p class="text-gray-600 mb-4">川红功夫茶，是四川省所产的红茶，由四川茶区的小叶种茶树鲜叶制成，于20世纪50年代在宜宾创制成功，是中国工夫红茶的后起之秀。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：香气清鲜，滋味醇厚</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：红亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 绿茶详细介绍 -->
+  <section id="green-tea" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">绿茶详解</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">绿茶是不发酵茶，保留了鲜叶的天然物质，含有的茶多酚、儿茶素、叶绿素、咖啡碱、氨基酸、维生素等营养成分也较多。</p>
+      </div>
+      
+      <!-- 绿茶概览 -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 items-center">
+        <div class="relative h-96 overflow-hidden rounded-xl shadow-xl order-2 lg:order-1">
+          <img src="https://picsum.photos/seed/green-tea-ceremony/800/600" alt="绿茶" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent flex items-end">
+            <div class="p-6 text-white">
+              <h4 class="text-xl font-bold">绿茶制作工艺</h4>
+              <p>杀青 → 揉捻 → 干燥</p>
+            </div>
+          </div>
+        </div>
+        <div class="order-1 lg:order-2">
+          <h3 class="text-2xl font-bold mb-6">绿茶简介</h3>
+          <p class="text-gray-700 mb-4">绿茶是中国的主要茶类之一，是指采取茶树的新叶或芽，未经发酵，经杀青、揉捻和干燥三个步骤而制作的饮品。其制成品的色泽和冲泡后的茶汤较多的保存了鲜茶叶的绿色格调。</p>
+          <p class="text-gray-700 mb-4">绿茶根据杀青和干燥方式不同，可分为炒青绿茶、烘青绿茶和蒸青绿茶等。绿茶的特点是汤清叶绿，香气清高，滋味鲜爽。</p>
+          <div class="flex flex-wrap gap-4 mt-8">
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">不发酵茶</span>
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">汤清叶绿</span>
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">香气清高</span>
+            <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm">茶性偏凉</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 绿茶种类 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 西湖龙井 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/longjing-green-tea/600/400" alt="西湖龙井" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">西湖龙井</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">浙江杭州</span>
+            </div>
+            <p class="text-gray-600 mb-4">西湖龙井是中国十大名茶之一，属绿茶，其产于浙江省杭州市西湖龙井村周围群山，并因此得名。具有1200多年历史。清乾隆游览杭州西湖时，盛赞西湖龙井茶。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：扁平挺直，香气清高</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：嫩绿明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 碧螺春 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/biluochun-green-tea/600/400" alt="碧螺春" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">碧螺春</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">江苏苏州</span>
+            </div>
+            <p class="text-gray-600 mb-4">碧螺春是中国传统名茶，中国十大名茶之一，属于绿茶类，已有1000多年历史。碧螺春产于江苏省苏州市吴县太湖的东洞庭山及西洞庭山（今苏州吴中区）一带，所以又称"洞庭碧螺春"。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：卷曲成螺，香气浓郁</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：嫩绿明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 黄山毛峰 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/huangshan-maofeng/600/400" alt="黄山毛峰" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">黄山毛峰</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">安徽黄山</span>
+            </div>
+            <p class="text-gray-600 mb-4">黄山毛峰是中国十大名茶之一，属于绿茶。产于安徽省黄山（徽州）一带，所以又称徽茶。由清代光绪年间谢裕大茶庄所创制。每年清明谷雨，选摘良种茶树"黄山种"、"黄山大叶种"等的初展肥壮嫩芽。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：形似雀舌，金黄显露</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：清澈明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 六安瓜片 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/liuan-guapian/600/400" alt="六安瓜片" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">六安瓜片</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">安徽六安</span>
+            </div>
+            <p class="text-gray-600 mb-4">六安瓜片，中华传统历史名茶，中国十大名茶之一，简称瓜片、片茶，产自安徽省六安市大别山一带，唐称"庐州六安茶"，为名茶；明始称"六安瓜片"，为上品、极品茶；清为朝廷贡茶。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：单片不带梗芽，形似瓜子</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：清澈透亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 信阳毛尖 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/xinyang-maojian/600/400" alt="信阳毛尖" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">信阳毛尖</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">河南信阳</span>
+            </div>
+            <p class="text-gray-600 mb-4">信阳毛尖又称豫毛峰，属绿茶类，是中国十大名茶之一，也是河南省著名特产之一。其主要产地在信阳市浉河区、平桥区和罗山县。由汉族茶农创制。民国初年，因信阳茶区的五大茶社产出品质上乘的本山毛尖茶，正式命名为"信阳毛尖"。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：细、圆、光、直、多白毫</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：嫩绿明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 都匀毛尖 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+          <div class="h-56 overflow-hidden">
+            <img src="https://picsum.photos/seed/duyun-maojian/600/400" alt="都匀毛尖" class="w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold">都匀毛尖</h3>
+              <span class="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">贵州都匀</span>
+            </div>
+            <p class="text-gray-600 mb-4">都匀毛尖，中国十大名茶之一。1956年，由毛泽东亲笔命名，又名"白毛尖"、"细毛尖"、"鱼钩茶"、"雀舌茶"，是贵州三大名茶之一。产于贵州都匀市，属黔南布依族苗族自治州。</p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="flex justify-between text-sm text-gray-500">
+                <span><i class="fa fa-leaf mr-1 text-primary"></i> 特点：卷曲似螺，白毫显露</span>
+                <span><i class="fa fa-tint mr-1 text-primary"></i> 汤色：清澈明亮</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于我们 -->
+  <section id="about" class="py-20 bg-gradient-to-b from-light to-white">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-16">
+        <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold mb-4">关于我们</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">我们致力于传承和推广中国传统茶文化，让更多人了解和喜爱中国茶。</p>
+      </div>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+        <div class="lg:col-span-1">
+          <img src="https://picsum.photos/id/246/600/800" alt="我们的故事" class="w-full h-auto rounded-xl shadow-lg">
+        </div>
+        <div class="lg:col-span-2">
+          <h3 class="text-2xl font-bold mb-6">我们的故事</h3>
+          <p class="text-gray-700 mb-4">茗韵茶叶源于对中国传统茶文化的热爱和尊重。我们的创始人是一位资深茶人，从小在茶山中长大，对茶叶有着深厚的感情和专业的认知。</p>
+          <p class="text-gray-700 mb-4">我们坚持从源头把控茶叶品质，与全国各优质茶区建立了长期合作关系，直接从茶农手中采购鲜叶，确保每一片茶叶都符合我们的高标准。</p>
+          <p class="text-gray-700 mb-6">我们不仅提供高品质的茶叶产品，还致力于茶文化的传播和推广，定期举办茶艺培训、品茶活动等，让更多人了解中国茶的魅力。</p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-leaf text-primary"></i>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">品质保证</h4>
+                <p class="text-gray-600 text-sm">严格的质量控制，确保每一片茶叶都符合高标准。</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-map-marker text-primary"></i>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">产地直供</h4>
+                <p class="text-gray-600 text-sm">直接从茶园采购，省去中间环节，保证新鲜和实惠。</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-history text-primary"></i>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">传统工艺</h4>
+                <p class="text-gray-600 text-sm">遵循传统制茶工艺，保留茶叶的天然风味和营养。</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="bg-primary/10 p-3 rounded-full mr-4">
+                <i class="fa fa-heart text-primary"></i>
+              </div>
+              <div>
+                <h4 class="font-bold mb-2">文化传承</h4>
+                <p class="text-gray-600 text-sm">致力于茶文化的传承和推广，让更多人了解中国茶。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="bg-dark text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div>
+          <a href="#" class="text-2xl font-bold flex items-center mb-6">
+            <i class="fa fa-leaf mr-2 text-accent"></i>
+            <span>茗韵</span>
+          </a>
+          <p class="text-gray-400 mb-6">探索中国传统茶文化的精髓，感受茶叶带来的健康与宁静。</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-weibo"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-wechat"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fa fa-youtube-play"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">快速链接</h4>
+          <ul class="space-y-3">
+            <li><a href="#home" class="text-gray-400 hover:text-white transition-colors">首页</a></li>
+            <li><a href="#categories" class="text-gray-400 hover:text-white transition-colors">茶叶分类</a></li>
+            <li><a href="#black-tea" class="text-gray-400 hover:text-white transition-colors">红茶</a></li>
+            <li><a href="#green-tea" class="text-gray-400 hover:text-white transition-colors">绿茶</a></li>
+            <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">关于我们</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">联系我们</h4>
+          <ul class="space-y-3">
+            <li class="flex items-start">
+              <i class="fa fa-map-marker mt-1 mr-3 text-accent"></i>
+              <span class="text-gray-400">北京市朝阳区建国路88号</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-phone mt-1 mr-3 text-accent"></i>
+              <span class="text-gray-400">400-123-4567</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-envelope mt-1 mr-3 text-accent"></i>
+              <span class="text-gray-400">contact@mingyun-tea.com</span>
+            </li>
+            <li class="flex items-start">
+              <i class="fa fa-clock-o mt-1 mr-3 text-accent"></i>
+              <span class="text-gray-400">周一至周日 9:00-21:00</span>
+            </li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-6">订阅我们</h4>
+          <p class="text-gray-400 mb-4">订阅我们的电子邮件，获取最新的茶叶资讯和优惠信息。</p>
+          <form class="flex">
+            <input type="email" placeholder="您的邮箱地址" class="px-4 py-2 bg-white/10 border border-white/20 rounded-l-lg focus:outline-none focus:border-accent text-white w-full">
+            <button type="submit" class="bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-r-lg transition-colors">
+              <i class="fa fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="border-t border-white/10 pt-8 mt-8 text-center text-gray-500 text-sm">
+        <p>&copy; 2023 茗韵茶叶 - 探索中国传统茶文化的精髓. 保留所有权利.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 返回顶部按钮 -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 invisible">
+    <i class="fa fa-chevron-up"></i>
+  </button>
+
+  <!-- JavaScript -->
+  <script>
+    // 导航栏滚动效果
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('bg-dark/95', 'shadow-lg');
+        navbar.classList.remove('bg-transparent');
+      } else {
+        navbar.classList.remove('bg-dark/95', 'shadow-lg');
+        navbar.classList.add('bg-transparent');
+      }
+    });
+    
+    // 移动端菜单切换
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      if (menuToggle.innerHTML.includes('fa-bars')) {
+        menuToggle.innerHTML = '<i class="fa fa-times"></i>';
+      } else {
+        menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+      }
+    });
+    
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          
+          // 如果是移动端，点击后关闭菜单
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            menuToggle.innerHTML = '<i class="fa fa-bars"></i>';
+          }
+        }
+      });
+    });
+    
+    // 返回顶部按钮
+    const backToTopButton = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.remove('opacity-0', 'invisible');
+        backToTopButton.classList.add('opacity-100', 'visible');
+      } else {
+        backToTopButton.classList.add('opacity-0', 'invisible');
+        backToTopButton.classList.remove('opacity-100', 'visible');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+    
+    // 元素滚动动画
+    const animateOnScroll = () => {
+      const elements = document.querySelectorAll('.card-hover');
+      elements.forEach(element => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.2;
+        
+        if (elementPosition < screenPosition) {
+          element.classList.add('animate-fade-in');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    window.addEventListener('load', animateOnScroll);
+  </script>
+</body>
+</html>
